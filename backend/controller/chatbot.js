@@ -5,8 +5,10 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({apiKey: GEMINI_API_KEY});
 
 async function chatBot(req,res) {
-  try{
-   const {USER_INPUT_TEXT}=req.body;
+  try{ 
+    if(!req.body || !req.body.userInput)res.status(400).json({"message":"please send your symptoms"})
+    const {userInput}=req.body;
+   const USER_INPUT_TEXT=userInput;
   let prompt=`Analyze the following patient query and provide a structured assessment.
       in your response No Markdown.
 Patient Query: ${USER_INPUT_TEXT}
@@ -33,7 +35,7 @@ Patient Query: ${USER_INPUT_TEXT}
 }
 catch(e){
     console.log(e);
-    res.status(500).json({"error":"error in generating respose by AI please try again later"})
+    res.status(500).json({"message":"error in generating respose by AI please try again later"})
 }
 }
 

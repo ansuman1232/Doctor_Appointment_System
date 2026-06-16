@@ -7,7 +7,7 @@ import {AuthContext} from "../context/AuthContext.jsx";
 import { useState,useContext } from 'react';
 function Login(){
     const [isLogin,setLogin] =useState(false);
-     const [username,setUsername]=useState("");
+    const [username,setUsername]=useState("");
      const [password,setPassword]=useState("");
      const [email,setEmail]=useState("");
      const {handleLogin,error,handleRegister}=useContext(AuthContext);

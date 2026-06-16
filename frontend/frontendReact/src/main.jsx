@@ -11,7 +11,7 @@ import AIChat from "./pages/AIChat.jsx";
 import Invoice from './pages/Invoice.jsx';
 import EditForm from "./pages/EditForm.jsx";
 import DoctorForm from "./pages/DoctorForm.jsx";
-import AppointmentList from './pages/AppointmentList.jsx';
+import DoctorAppointmentList from './pages/DoctorAppointmentList.jsx';
 
 
 createRoot(document.getElementById('root')).render(
@@ -49,9 +49,9 @@ createRoot(document.getElementById('root')).render(
         </ProtectedRoute>
         }/>
 
-         <Route path="/appointment_list" element={
+         <Route path="/doctor_appointment_list" element={
         <ProtectedRoute>
-        <AppointmentList/>
+        <DoctorAppointmentList/>
         </ProtectedRoute>
         }/>
         

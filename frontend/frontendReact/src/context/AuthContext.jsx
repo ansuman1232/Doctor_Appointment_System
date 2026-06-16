@@ -21,7 +21,9 @@ export function AuthProvider({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [accessToken, setAccessToken] = useState(null); // Keep strictly in memory
     const [userId,setUserId]=useState("");
+    const [username,setUsername]=useState("");
     const [error, setError] = useState("");
+    const [role,setRole]=useState("");
     const route = useNavigate();
 
     // Clear error notices automatically after 3 seconds
@@ -57,7 +59,7 @@ export function AuthProvider({ children }) {
                         // Call refresh endpoint (browser automatically sends the HttpOnly cookie)
                         const response = await apiPrivate.post('/refresh-token');
                         const newAccessToken = response.data.accessToken;
-
+                         
                         setAccessToken(newAccessToken);
                         prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                         
@@ -89,7 +91,10 @@ export function AuthProvider({ children }) {
             if (response.status === 200) {
                 const token = response.data.accessToken; // Read access token from JSON body
                 setAccessToken(token);
+                setUserId(response.data.userId);
+                setRole(response.data.role)
                 setIsLoggedIn(true);
+                setUsername(username)
                 route("/dash");
             }
         } catch (e) {
@@ -138,6 +143,9 @@ export function AuthProvider({ children }) {
         handleLogin, 
         handleLogout, 
         handleRegister,
+        userId,
+        username,
+        role,
         error
     }), [isLoggedIn, error]);
 

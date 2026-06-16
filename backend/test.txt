@@ -5,10 +5,10 @@
 }
 
 
-{    "patientId":"6a1d2e92948927616b611a69",
+{
+    "patientId":"6a1d2e92948927616b611a69",
     "doctorId":"6a238682392e35336ff8363b",
-    "date":"12-20-2024",
-    "slot":"11pm",
+    "date":"2026-12-19",
+    "slot":"12pm",
     "symptoms":"headache"
-   
 }
