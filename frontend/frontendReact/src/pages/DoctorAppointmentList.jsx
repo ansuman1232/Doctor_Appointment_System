@@ -1,18 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import axios from 'axios';
 
 import NavMenu from "../utils/NavMenu";
-
+import { io } from 'socket.io-client';
+import { AuthContext } from '../context/AuthContext';
+const socket = io('http://localhost:3000/');
 
 function DoctorAppointmentList(){
-    
+    const {userId}=useContext(AuthContext)
     const [apps, setApps] = useState([]);
      
     useEffect(() => {
         
         axios.get('http://localhost:3000/api/v1/admin/doctor-applications?status=pending')
           .then(res =>{ setApps([...res.data.arr]);});
-      }, [apps]);
+      }, []);
+
+
+
+    //  useEffect(()=>{
+    //   socket.emit('join_room',userId);
+    //   socket.on('update_doctor_appointment_list',(id)=>{
+    //        setApps((prevApps)=>{
+            
+    //         return prevApps.filter((apps)=>)
+
+    //        })
+    //   })
+    // },[]) 
+
+
+
+
+
 
       const handleDecision = async (id, decision) => {
         try {
@@ -23,6 +43,9 @@ function DoctorAppointmentList(){
           alert("Action failed");
         }
       };
+
+
+
 
     return(
     <>

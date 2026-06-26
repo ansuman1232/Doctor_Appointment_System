@@ -37,7 +37,7 @@ main().then(() => {
     }
   });
 
-  // 3. CRITICAL: Store the io instance in Express so your controllers can reach it
+  // 3. CRITICAL: Store the io instance in Express so my controllers can reach it
   app.set('socketio', io);
 
   // 4. Register your routes AFTER setting 'socketio'

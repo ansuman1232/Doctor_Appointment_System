@@ -6,6 +6,8 @@ const DoctorApplicationSchema = new mongoose.Schema({
   experience: { type: Number, required: true },
   qualifications: { type: String }, // Link to PDF or text
   cost:{type:Number,required:true},
+  contact:{type:String},
+  availability: [{ day: String, slots: [String] }],
   status: { 
     type: String, 
     enum: ['pending', 'approved', 'rejected'], 

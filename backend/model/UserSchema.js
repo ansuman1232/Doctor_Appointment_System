@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   role: { type: String, enum: ['patient', 'doctor', 'admin'], required: true },
-  contact_no:{type:Number},
+  contact:{type:String},
   cost:{type:Number},
   appointment:[{type:mongoose.Schema.Types.ObjectId, ref: 'Appointment'}],
   specialization: { type: String }, // For doctors only

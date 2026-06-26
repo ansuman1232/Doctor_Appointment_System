@@ -4,14 +4,46 @@ import Notification from '../model/Notification.js';
 import mongoose from 'mongoose';
 
 export const createDoctorApplication =async (req,res)=>{
-  const {userId,spec,exp,cost,quali}=req.body;
- // console.log(userId);
+  const {userId,spec,exp,cost,quali,avail,contact}=req.body;
+ console.log(avail);
    try{
      //console.log(userId,spec,exp,cost,quali)
-    if(!userId || !spec || !exp || !cost )res.status(400).json({"error":"please enter specialization ,experience and fee "})
-  const doc=  new DoctorApplication({userId,experience:exp,qualifications:quali,specialization:spec,cost})
+    
+    if(!userId || !spec || !exp || !cost || !contact)res.status(400).json({"error":"please enter specialization ,experience ,contact number and fee "})
+     
+      let  availability=[];
+
+      for(let i in avail){
+        if(avail[i].slots.length>0)availability.push({day:i,slots:avail[i].slots})
+      }
+      
+      
+      const doc=  new DoctorApplication({userId,experience:exp,qualifications:quali,specialization:spec,cost,availability,contact})
    await doc.save();
+  
    res.json({"message":"Your application was successfully sent"})
+   }
+   catch(e){
+    console.log(e);
+   }
+
+   const io= req.app.get('socketio')
+   try{
+   // console.log(process.env.ADMIN_ID)
+    io.to(`${process.env.ADMIN_ID}`).emit("doctor_application", {
+      
+      message: `userId: ${userId} wants to be a doctor`
+    });
+
+    // 3. Create Persistent Notification
+    await Notification.create([{
+      userId: process.env.ADMIN_ID,
+      message: `userId: ${userId} wants to be a doctor`,
+      type: 'SYSTEM_ALERT',
+      isRead:false
+    }]);
+
+
    }
    catch(e){
     console.log(e);
@@ -45,7 +77,9 @@ export const handleDoctorApplication = async (req, res) => {
         application.userId,
         { 
           role: 'doctor',
-          specialization: application.specialization 
+          specialization: application.specialization ,
+          availability:application.availability,
+          contact:application.contact
         },
         { session }
       );
@@ -57,7 +91,8 @@ export const handleDoctorApplication = async (req, res) => {
     await Notification.create([{
       userId: application.userId,
       message: `Your application to become a doctor was ${status}.`,
-      type: 'SYSTEM_ALERT'
+      type: 'SYSTEM_ALERT',
+      isRead:false
     }], { session });
 
 
@@ -74,6 +109,7 @@ export const handleDoctorApplication = async (req, res) => {
   } catch (error) {
     await session.abortTransaction();
    await session.endSession();
+   console.log(error)
    return res.status(500).json({ error: error.message });
   } 
 
@@ -81,6 +117,8 @@ export const handleDoctorApplication = async (req, res) => {
    if (io && application && application.userId) {
 
     try {
+    
+
    io.to(application.userId.toString()).emit("admin_decision", {
     status,
     message: `Application ${status}`

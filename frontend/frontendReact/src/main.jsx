@@ -12,13 +12,18 @@ import Invoice from './pages/Invoice.jsx';
 import EditForm from "./pages/EditForm.jsx";
 import DoctorForm from "./pages/DoctorForm.jsx";
 import DoctorAppointmentList from './pages/DoctorAppointmentList.jsx';
-
+import PatientAppointmentForm from './pages/PatientAppointmentForm.jsx';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import MyAppointment from './pages/MyAppointment.jsx';
+import PatientAppointmentApproval from './pages/PatientAppointmentApproval.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
   
       <BrowserRouter>
         <AuthProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
     <Routes>
       <Route path="/" element={<App />} />
 
@@ -62,9 +67,31 @@ createRoot(document.getElementById('root')).render(
         </ProtectedRoute>
         }/>
 
+<Route path="/patient_appointment" element={
+        <ProtectedRoute>
+        <PatientAppointmentForm/>
+        </ProtectedRoute>
+        }/>
+
+
+<Route path="/my_appointment" element={
+        <ProtectedRoute>
+        <MyAppointment/>
+        </ProtectedRoute>
+        }/>
+
+
+<Route path="/patient_appointment_approval" element={
+        <ProtectedRoute>
+        <PatientAppointmentApproval/>
+        </ProtectedRoute>
+        }/>
+
+
  
       <Route path="/login" element={<Login/>}/>
     </Routes>
+    </LocalizationProvider>
     </AuthProvider>
   </BrowserRouter>
 
