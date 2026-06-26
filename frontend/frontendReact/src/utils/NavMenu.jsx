@@ -25,7 +25,7 @@ function NavMenu(){
           {role==="admin" &&  <div onClick={()=>navigate("/doctor_appointment_list")}>Doctor Appointment List</div>}
           {role==="doctor" &&  <div onClick={()=>navigate("/patient_appointment_approval")}>Patient Appointment Approval</div>}
              <div onClick={()=>navigate("/doctor_form")}>Apply for Doctor form</div>
-             <div onClick={()=>navigate("/edit_form")}>Edit my Info</div>
+            
              <div onClick={()=>navigate("/ai_chat")}>AI chat</div>
              <div onClick={()=>navigate("/invoice")}>pending invoice</div>
              <div onClick={()=>navigate("/my_appointment")}>My appointments</div>

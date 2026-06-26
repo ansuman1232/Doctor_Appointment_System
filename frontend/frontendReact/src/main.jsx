@@ -9,7 +9,7 @@ import {AuthProvider}  from './context/AuthContext.jsx';
 import { ProtectedRoute } from './utils/ProtectedRoute.jsx';
 import AIChat from "./pages/AIChat.jsx";
 import Invoice from './pages/Invoice.jsx';
-import EditForm from "./pages/EditForm.jsx";
+
 import DoctorForm from "./pages/DoctorForm.jsx";
 import DoctorAppointmentList from './pages/DoctorAppointmentList.jsx';
 import PatientAppointmentForm from './pages/PatientAppointmentForm.jsx';
@@ -42,12 +42,7 @@ createRoot(document.getElementById('root')).render(
         }/>
 
 
-       <Route path="/edit_form" element={
-        <ProtectedRoute>
-        <EditForm/>
-        </ProtectedRoute>
-        }/>
-
+     
         <Route path="/ai_chat" element={
         <ProtectedRoute>
         <AIChat/>
